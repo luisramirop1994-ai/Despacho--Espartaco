@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Despacho Espartaco</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+   :root {
+  --color-primario: #e74c3c;   /* rojo principal */
+  --color-secundario: #8e2c2c; /* rojo oscuro/burdeos */
+  --color-acento: #ff7675;     /* rojo suave/rosa coral */
+  --color-acento2: #f5b7b1;    /* rosado claro */
+  --color-texto: #333;
+  --fuente: 'Poppins', sans-serif;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--fuente);
+      color: var(--color-texto);
+      background: linear-gradient(-45deg, var(--color-primario), var(--color-secundario), var(--color-acento), var(--color-acento2));
+      background-size: 400% 400%;
+      animation: bgAnimation 12s ease infinite;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgAnimation {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      color: #fff;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+
+    /* Splash Screen */
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, var(--color-secundario), var(--color-primario));
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 3000;
+      animation: fadeOut 1s ease forwards;
+      animation-delay: 3.5s;
+    }
+
+    #splash-screen.hidden { display: none; }
+
+    .splash-content {
+      max-width: 600px;
+      padding: 2rem;
+      animation: zoomIn 1s ease;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    #splash-screen h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    #splash-screen p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    #splash-screen button {
+      padding: 0.8rem 1.5rem;
+      background: #fff;
+      color: var(--color-secundario);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    #splash-screen button:hover {
+      background: var(--color-acento);
+      color: #fff;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    /* Hero */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 50vh;
+      color: #fff;
+      padding: 1rem;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .typing {
+      border-right: 3px solid #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards, blink 0.75s step-end infinite;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    .hero button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 30px;
+      background: #fff;
+      color: var(--color-secundario);
+      font-weight: bold;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+    .hero button:hover {
+      background: var(--color-primario);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* Cards */
+    .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  max-width: 800px;
+  margin: 1rem auto;
+}
+   
+    .card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      border: 2px solid var(--color-acento);
+    }
+    .card h3 { margin-bottom: 1rem; color: var(--color-primario); }
+
+    /* Mejora en móviles definitiva */
+    @media (max-width: 768px) {
+      .cards {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 1rem;
+        gap: 1rem;
+      }
+      .card {
+        width: 100% !important;
+        margin: 0 auto 1rem auto;
+        padding: 1.2rem;
+        font-size: 0.95rem;
+      }
+      .card h3 {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Sidebar Menu */
+    .menu-toggle {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  z-index: 1100;
+  background: var(--color-primario);
+  border: none;
+  color: #fff;
+  font-size: 2.2rem; /* más grande el símbolo ☰ */
+  border-radius: 12px;
+  padding: 0.8rem 1.4rem; /* más espacio */
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.menu-toggle:hover {
+  transform: rotate(90deg) scale(1.1);
+  background: var(--color-secundario);
+}
+
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 260px;
+      height: 100%;
+      background: rgba(44,62,80,0.95);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+      padding: 2rem 1rem;
+      z-index: 1000;
+    }
+    nav.active { transform: translateX(0); }
+    nav h2 { color: #ecf0f1; text-align: center; margin-bottom: 1rem; }
+    nav button {
+      width: 100%; margin: 0.5rem 0; padding: 0.8rem;
+      border: none; border-radius: 12px;
+      background: linear-gradient(135deg, var(--color-primario), var(--color-acento));
+      color: #fff; cursor: pointer; font-size: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    nav button:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.2); }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1200;
+    }
+    .modal.show { display: flex; animation: fadeIn 0.4s ease; }
+    .modal-content {
+      background: linear-gradient(135deg, #ffffff, #f8f8f8);
+      padding: 2rem;
+      border-radius: 20px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      border: 3px solid var(--color-primario);
+      animation: modalZoom 0.4s ease;
+    }
+    @keyframes modalZoom {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-content h2 {
+      margin-bottom: 1rem;
+      color: var(--color-secundario);
+      border-bottom: 2px solid var(--color-acento);
+      padding-bottom: 0.5rem;
+      text-align: center;
+    }
+    .modal-content p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .close-btn {
+      position: absolute; top: 20px; right: 30px;
+      font-size: 2rem; border: none; background: none;
+      cursor: pointer; color: #555;
+    }
+
+    /* Cookie banner */
+    #cookie-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(135deg, var(--color-secundario), var(--color-primario));
+      color: #fff; padding: 1rem;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 2000; font-size: 0.9rem;
+      animation: slideUp 0.8s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(100%);} to { transform: translateY(0);} }
+    #cookie-banner button {
+      margin-left: 0.5rem; background: #fff; color: var(--color-primario);
+      border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;
+    }
+    #cookie-banner button:hover { background: var(--color-acento); color: #fff; }
+
+    /* Botón flotante más grande */
+.cta-floating {
+  position: fixed; bottom: 150px; right: 20px;
+  background: var(--color-primario);
+  color: #fff; border: none; border-radius: 50px;
+  padding: 1.8rem 3rem; /* más grande */
+  font-size: 1.5rem; /* texto más grande */
+  font-weight: bold;
+  cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  z-index: 1500;
+  animation: pulse 2s infinite;
+}
+
+/* Botón flotante WhatsApp */
+.whatsapp-floating {
+  position: fixed; bottom: 80px; right: 20px;
+  background: #25D366; /* color oficial de WhatsApp */
+  border-radius: 50%;
+  width: 85px; height: 85px; /* más grande */
+  display: flex; justify-content: center; align-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  z-index: 1500;
+  transition: transform 0.2s;
+}
+.whatsapp-floating:hover { transform: scale(1.1); }
+
+.whatsapp-floating img {
+  width: 48px; height: 48px; /* icono más grande */
+  filter: invert(1);
+}
+    <!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/34600017133?text=Hola%2C%20quiero%20realizar%20una%20consulta
+   target="_blank"
+   class="whatsapp-floating"
+   aria-label="WhatsApp">
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" />
+</a>
+
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+      color: #fff;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+    footer a {
+      color: var(--color-acento2);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  /* Scrollbar personalizada */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-primario);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-secundario);
+    }
+
+    /* Animación header */
+    header {
+      animation: fadeSlide 1s ease;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+   
+/* --- SOLUCIÓN PARA BLOQUEO DE CLICS EN MÓVILES --- */
+
+/* Asegurar que los botones flotantes no bloqueen la interacción con el resto */
+.cta-floating, .whatsapp-floating {
+  pointer-events: auto;
+}
+
+/* Asegurar que modales o banners cerrados no intercepten toques */
+.modal:not(.show),
+#cookie-banner[style*="display: none"] {
+  pointer-events: none;
+}
+
+/* Prevenir que el body quede bloqueado después de cerrar el modal */
+body {
+  touch-action: auto !important;
+  overflow-y: auto !important;
+}
+
+/* Solución: asegurar que los botones flotantes estén por encima del banner de cookies */
+.cta-floating,
+.whatsapp-floating {
+  z-index: 5000; /* más alto que el banner de cookies */
+  pointer-events: auto;
+}
+
+/* Por si el banner de cookies lo tapa con su propio fondo */
+#cookie-banner {
+  z-index: 2000; /* inferior a los botones flotantes */
+}
+
+</style>
+</head>
+<body>
+
+<!-- Splash Screen -->
+<div id="splash-screen">
+  <div class="splash-content">
+    <h1>Despacho Espartaco</h1>
+    <p>Bienvenidx
+    El menú ☰ está arriba a la izquierda.  
+    Allí encontrarás información sobre <b>despidos</b>, <b>cantidades adeudadas</b>, <b>acoso laboral</b> y mucho más.</p>
+    <button id="enter-btn">Entrar</button>
+  </div>
+</div>
+
+<header>DESPACHO ESPARTACO</header>
+
+<!-- Botón hamburguesa -->
+<button class="menu-toggle" aria-label="Abrir menú">☰</button>
+ 
+<!-- Menú lateral -->
+<nav id="menu">
+  <h2>Menú</h2>
+  <button data-title="Historia" data-text="<p><b><br>El DESPACHO ESPARTACO fue fundado con el objetivo de <u>defender los derechos de lxs trabajadorxs</u> ante las injusticias y visicitudes que ofrece el mercado laboral español. Da igual si eres becarix, temporal, indefinidx, falsx autónomo, o que trabaje en negro. Nadie que trabaje por cuenta ajena en el mercado laboral español está exento de abusos laborales.<br><b><p>
+
+   
+<p><b><br>El DESPACHO ESPARTACO <u>no recibe ningún tipo de subvención gubernamental</u>, ya sea central, autonómica o local. Tampoco está bajo los hilos de ninguna organización empresarial o sindical. No está afiliado a ningún partido político. Tampoco se conforma con el primer acuerdo que se le presenta. Es por ello que el único interés que tiene el DESPACHO ESPARTACO, es, en la medida de lo posible, <u>la defensa de los derechos de los trabajadores.</u><br><b></p>
+<br><b><p>
+Contacte con nosotros para más información.
+<br><b><p>
+
+<br><b><p>
+Te esperamos.
+<br><b><p>
+     
+     
+">Historia</button>
+  <button data-title="¿Le han despido?" data-text="<br><b></p>
+Si le han despedido, <u>es más que probable que no le hayan pagado todo lo que le deban</u>, que se hayan confundido (por decirlo de alguna manera) de convenio o que las causas de su despido no sean ciertas, ya sea de forma disciplinaria (Un supuesto bajo rendimiento, por ejemplo) o ya sea de forma objetiva (Que la empresa esté en números rojos o que deba cerrar por Fuerza Mayor). Tenga en mano la carta de despido, pues la misma es obligatoria. Compruebe las fechas, que se le haya entregado correctamente el finiquito... y si todavía no está satisfecho, contacte con nosotrxs. No se calle.  <br><b></p>
+
+<br><b><p>
+Contacte con nosotros.
+<br><b><p>
+
+<br><b><p>
+Te esperamos.
+<br><b><p>
+     
+      ">Me han despedido</button>
+  <button data-title="Impago" data-text="<p> <b><br>¿Quién no ha llegado a una entrevista de trabajo y escuchar que ellos se consideran como una familia en la que todos sus miembros deben colaborar para seguir adelante? <u>Usted trabaja por cuenta ajena, y eso implica que es ajena por tanto a los beneficios y pérdidas que pueda tener la empresa</u>. Si fuera su familia, que le hubieren hecho socix. Mientras tanto, si la empresa no tiene dinero para pagarle su nómina, que pida un préstamo, pero que no jueguen con su salario.<p> <b><br>
+   <p> <b><br> Eso lo sabemos en el DESPACHO ESPARTACO, y es por ello que no nos conformaremos con el primer acuerdo que se nos presente. <u>Nosotrxs no pensamos aquello de más vale un mal acuerdo que un buen juicio, pues el responsable de que no le paguen, no es usted.</u> Faltaría más que se sintiera culpable por el hecho de reclamar lo que es suyo. Contacte con nosotrxs, y por encima de todo, no se quede calladx<br><b><p>
+
+<br><b><p>
+Contacte con nosotros.
+<br><b><p>
+
+<br><b><p>
+Te esperamos.
+<br><b><p>
+
+           
+       ">Mi empresa me debe dinero</button>
+  <button data-title="Mi jefe me grita" data-text="<p><b><br>En el DESPACHO ESPARTACO <u>conocemos de sobra la sensación que se tiene cuando llega al trabajo y siente miedo.</u> ¿Sorprendidx? No debería, pues antes que abogadxs hemos sido y somos trabajadorxs. Sabemos lo que es tener un superior que le chille, que le margine, que le ponga tareas imposibles... Sabemos lo que es tener a uno o varios compañerxs, por llamarlxs de alguna forma, que lo único que buscan es manchar su imagen para mejorar la suya propia. Conocemos lo que es el acoso, y por ello queremos transmitirle que el DESPACHO ESPARTACO <u>estamos comprometidxs con acabar con esa lacra,</u> en la medida de nuestras posibilidades. No hay acuerdo que valga.<br><b><p>
+
+<br><b><p>
+Contacte con nosotros.
+<br><b><p>
+
+<br><b><p>
+Te esperamos.
+<br><b><p>
+     
+       ">Mi jefe me grita</button>
+  <button data-title="Incapacidades" data-text="<p><b><br> Si usted quiere solicitar una incapacidad permanente (ya sea en la modalidad de absoluta, permanente, gran invalidez o parcial) o cree que tiene derecho a una de ellas, <u>debe saber que el Instituto Nacional de la Seguridad Social muchas veces las deniega</u>, a veces incluso <u>se puede percibir cierto automatismo en estas decisiones</u>. Por eso, antes de realizar cualquier acción, deje aconsejarse por nosotrxs.<br><b><p>
+
+<p><b><br> Si usted ha sufrido un accidente o enfermedad a causa de su trabajo, y ha sido casuada por la empresa, dejándole lesiones permanentes o incluso una incapacidad permanente, <u>sepa que puede pedir una indemnización o un recargo a su empresa por la negligencia de la misma, respectivamente</u> a la hora de incumplir la normativa de prevención de riesgos laborales.<br><b><p>
+
+<br><b><p>
+Contacte con nosotros.
+<br><b><p>
+
+<br><b><p>
+Te esperamos.
+<br><b><p>
+
+      ">Incapacidades</button>
+  <button data-title="Contacto" data-text="Para contactar con nosotrxs, será necesario reservar cita previa al teléfono 123-456-789<br>O bien, también podrá reservar cita previa en el email: info@despachoespartaco.com">Contacto</button>
+  <button data-title="Aviso legal" data-text="<p>AVISO LEGAL:<p>
+     
+<p>Para dar cumplimiento al artículo 10 de la Ley 34/2002 de Servicios de la Sociedad de la Información y del Comercio Electrónico, informamos a los usuarios de nuestros datos:<p>
+
+<p>Denominación Social: DESPACHO ESPARTAO<p>
+
+<p>Titular del despacho: Luís Ramiro Pardo<p>
+
+<p>Número de colegiado: 136629<p>
+
+<p>Teléfono:<p>
+
+<p>E-Mail:<p>
+
+Sitio Web:
+
+1.- OBJETO
+<p> DESPACHO ESPARTACO(en adelante también el prestador) cómo responsable del sitio web, pone a disposición de los usuarios el presente documento, que regula el uso del sitio web, con el que pretendemos dar cumplimiento a las obligaciones que dispone la Ley 34/2002, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSICE o LSSI), así como informar a todos los usuarios del sitio web respecto de cuáles son las condiciones de uso del sitio web.
+A través de la Web, DESPACHO ESPARTACO facilita a los usuarios el acceso y utilización de diferentes servicios y contenidos puestos a disposición a través del web.
+Toda persona que acceda a esta web asume el papel de usuario (en adelante el usuario), e implica la aceptación total y sin reservas de todas y cada una de las disposiciones incluidas en este aviso legal, así como a cualesquiera otras disposiciones legales que fueran de aplicación.
+Como usuarios, tienen que leer atentamente este Aviso Legal en cualquier de las ocasiones que entren a la web, pues ésta puede sufrir modificaciones ya que el prestador se reserva el derecho a modificar cualquier tipo de información que pudiera aparecer en la web, sin que exista la obligación de pre-avisar o poner en conocimiento de los usuarios estas obligaciones, siendo suficientes la publicación en el sitio web del prestador <p>.
+
+
+<p>2.- CONDICIONES DE ACCESO Y USO DE LA WEB.<p>
+
+
+<p>2.1.- Carácter gratuito del acceso y uso de la web.
+La prestación de los servicios por parte de DESPACHO ESPARTACO tiene carácter gratuito para todos los Usuarios. No obstante, esta web tiene carácter informativo, por lo que la contratación del servicio es independiente del acceso a la web. Si desean obtener presupuesto o precio de los servicios o de su caso en particular en la actividad propia del despacho, deberán contactar y contratar directamente con quien presente el servicio, que es independiente del acceso y la navegación web.<p>
+
+<p>2.2.- Veracidad de la información.
+Toda la información que facilita el Usuario tiene que ser veraz. A estos efectos, el Usuario garantiza la autenticidad de los datos comunicados a través de los formularios para la suscripción de los Servicios. Será responsabilidad del Usuario mantener toda la información facilitada a DESPACHO ESPARTACO permanentemente actualizada de forma que responda, en cada momento, a su situación real. En todo caso, el Usuario será el único responsable de las manifestaciones falsas o inexactas que realice y de los perjuicios que cause al prestador o a terceros.<p>
+
+<p>2.3.- Obligación de hacer un uso correcto de la Web.
+El Usuario se compromete a utilizar la Web de conformidad a la Ley y al presente Aviso Legal, así como a la moral y a buenas costumbres. A tal efecto, el Usuario se abstendrá de utilizar la página con finalidades ilícitas o prohibidas, lesivas de derechos e intereses de terceros, o que de cualquier forma puedan dañar, inutilizar, sobrecargar, deteriorar o impedir la normal utilización de equipos informáticos o documentos, archivos y toda clase de contenidos almacenados en cualquier equipo informático del prestador.
+
+En particular, y a título indicativo pero no exhaustivo, el Usuario se compromete a no transmitir, difundir o poner a disposición de terceros informaciones, datos, contenidos, mensajes, gráficos, dibujos, archivos de sonido o imagen, fotografías, grabaciones, software y, en general, cualquier clase de material que:<p>
+
+<p>(a) sea contraria, desprecie o atente contra los derechos fundamentales y las libertades públicas reconocidas constitucionalmente, en tratados internacionales y otras normas vigentes;<p>
+
+<p>(b)
+ induzca, incite o promueva actuaciones delictivas, denigrantes, difamatorias, violentas o, en general, contrarias a la ley, a la moral y al orden público;<p>
+
+<p>(c) induzca, incite o promueva actuaciones, actitudes o pensamientos discriminatorios por razón de sexo, raza, religión, creencias, edad o condición;<p>
+
+<p>(d) sea contrario al derecho al honor, a la intimidad personal o familiar o a la propia imagen de las personas;<p>
+
+<p>(e) de cualquier manera perjudique la credibilidad del prestador o de terceros; y<p>
+
+<p>(f) constituya publicidad ilícita, engañosa o desleal.<p>
+
+
+<p>3.- EXCLUSIÓN DE GARANTÍAS Y RESPONSABILIDAD<p>
+
+<p>El prestador se exime de cualquier tipo de responsabilidad derivada de la información publicada en nuestro sitio web, siempre que esta información haya sido manipulada o introducida por un tercero ajeno.
+DESPACHO ESPARTACO no otorga ninguna garantía ni se hace responsable, en ningún caso, de los daños y perjuicios de cualquier naturaleza que puedan salir a colación de la falta de disponibilidad, mantenimiento y efectivo funcionamiento de la web o de sus servicios y contenidos; de la existencia de virus, programas maliciosos o lesivos en los contenidos; del uso ilícito, negligente, fraudulento o contrario a este Aviso Legal y condiciones de uso; o de La falta de licitud, calidad, fiabilidad, utilidad y disponibilidad de los servicios prestados por terceros y ademanes a disposición de los usuarios en el sitio web.
+
+El prestador no se hace responsable bajo ningún concepto de los daños que puedan dimanar del uso ilegal o indebido de la presente página web.<p>
+
+
+<p>4.- COOKIES
+El sitio web del prestador puede utilizar cookies para llevar a cabo determinadas funciones que son consideradas imprescindibles para el correcto funcionamiento y visualización del lugar. Las cookies utilizadas tienen, en todo caso, carácter temporal, con la única finalidad de hacer más eficaz la navegación, y desaparecen al acabar la sesión del usuario.
+En ningún caso se utilizarán las cookies para recoger información de carácter personal. Para más información, ver nuestra Política de Cookies.<p>
+
+
+<p>5.- ENLACES
+Desde el sitio web es posible que se redirija a contenidos patrocinados, anuncios y / o enlaces de afiliados y / o de terceras webs. Entre los enlaces facilitados, existe la posibilidad de informar o hacer referencia a productos y / o servicios de terceros. Dado que desde la web no podemos controlar los contenidos introducidos por los terceros, DESPACHO ESPARTACO no asume ningún tipo de responsabilidad respecto a dichos contenidos, ni garantiza la experiencia, integridad o calidad de sus productos. En todo caso, el prestador manifiesta que procederá a la retirada inmediata de cualquier contenido que pudiera contravenir la legislación nacional o internacional, la moral o el orden público, procediendo a la retirada inmediata de la re-dirección a estas webs, poniendo en conocimiento de las autoridades competentes el contenido en cuestión.<p>
+
+
+<p>El prestador no se responsabiliza de la información y contenidos almacenados, a título enunciativo, pero no limitativo, en foros, chats, generadores de blogs, comentarios, redes sociales o cualquier otro medio que permita a terceros publicar contenidos de forma independiente en la página web del prestador. No obstante y en cumplimiento de lo dispuesto en el art. 11 y 16 de la LSSICE, el prestador se pone a disposición de todos los usuarios, autoridades y fuerzas de seguridad, y colaborando de forma activa en la retirada o, cuando sea necesario, el bloqueo de todos aquellos contenidos que puedan afectar o contravenir la legislación nacional, o internacional, derechos de terceros o la moral y el orden público. En caso de que el usuario considere que puede existir algún contenido que pudiera ser susceptible de esta clasificación, se ruega lo notifique de forma inmediata al administrador del sitio web.<p>
+
+
+<p>6.- PROTECCIÓN DE DATOS PERSONALES<p>
+<p>DESPACHO ESPARTACO está comprometido con el cumplimiento de la normativa de protección de datos personales y garantiza el cumplimiento íntegro de las obligaciones dispuestas, así como la implementación de las medidas de seguridad dispuestas al Reglamento Europeo de Protección de datos y la normativa española de protección de datos. Para más información, ver el apartado de Política de privacidad.<p>
+
+
+<p>7.- PROPIEDAD INTELECTUAL E INDUSTRIAL<p>
+<p>El sitio web, incluyendo a título enunciativo, pero no limitativo, la programación, edición, compilación y otros elementos necesarios para su funcionamiento, los diseños, logotipos, textos, entradas de blog, fotografías y/o gráficos son propiedad del prestador o, en caso de que fuera necesario, dispone de la licencia o autorización expresa por parte de los autores. Todos los contenidos del sitio web se encuentran debidamente protegidos por la normativa de propiedad intelectual e industrial.
+Independientemente de la finalidad por la que fueran destinados, la reproducción total o parcial, uso, distribución y comunicación pública requieren de la autorización escrita previa por parte del prestador. Cualquier uso no autorizado previamente por parte del prestador será considerado un incumplimiento grave de los derechos de propiedad intelectual o industrial del autor.
+Los diseños, logotipos, textos y/o gráficos ajenos al prestador y que puedan aparecer en el sitio web, pertenecen a sus respectivos propietarios, siendo ellos mismos los responsables de cualquier posible controversia que pudiera acontecer respecto a los mismos. En todo caso, el prestador cuenta con la autorización expresa y previa por parte de los mismos.
+El prestador reconoce a favor de sus titulares los correspondientes derechos de propiedad industrial e intelectual, no implicando la mención o aparición en el sitio web, de la existencia de derechos o ninguna responsabilidad del prestador sobre los mismos, como tampoco respaldo, patrocinio o recomendación por parte del mismo.
+Para realizar cualquier tipo de observación respecto a posibles incumplimientos de los derechos de propiedad intelectual o industrial, así como sobre cualquiera de los contenidos del sitio web, puede hacerlo a través del correo electrónico arriba reseñado.<p>
+
+
+<p>8.- LEY APLICABLE Y JURISDICCIÓN
+Para la resolución de las controversias o cuestiones relacionadas con la presente página web o de las actividades en esta desarrolladas, será de aplicación la legislación española, a la que se someten expresamente las partes, siendo competentes por la resolución de todos los conflictos derivados o relacionados con su uso los Juzgados y Tribunales de Madrid.<p>
+">Aviso legal</button>
+  <button data-title="Política de cookies" data-text="<p>INTRODUCCIÓN:<p>
+<p>La web de DESPACHO ESPARTACO utiliza cookies propias y de terceros. Las cookies se asocian únicamente a un usuario anónimo y su ordenador o dispositivo y no proporcionan referencias que permitan conocer sus datos personales, salvo permiso expreso de aquél.
+El usuario puede, en todo momento, aceptar o rechazar las cookies instaladas que no sean estrictamente necesarias para el correcto funcionamiento de la web y el acceso al Usuario a sus servicios, a través del panel de ajuste de cookies proporcionado en nuestra web. Asimismo, podrá configurar su navegador en todo momento sin que ello perjudique la posibilidad del Usuario de acceder a los contenidos. Sin embargo, le informamos de que el rechazo de las cookies puede disminuir el buen funcionamiento de la web.<p>
+<p>COOKIES AFECTADAS POR LA NORMATIVA Y COOKIES EXENTAS<p>
+<p>Según la directiva de la UE, las cookies que requieren el consentimiento informado por parte del usuario son las cookies de analítica, las de publicidad y afiliación, quedando exceptuadas las de carácter técnico y las necesarias para el funcionamiento del sitio web o la prestación de servicios expresamente demandados por el usuario.<p>
+<p>TIPOS DE COOKIES<p>
+<p>a) Según la entidad que las gestione, hay Cookies propias y de terceros.<p>
+<p>b) Según el tiempo que permanecen activas, existen las de sesión (diseñadas para recabar y almacenar datos mientras el usuario accede a una página web) y las persistentes (en las que los datos se almacenan en el terminal y pueden ser tratados durante un periodo definido por el responsable de la cookie -puede ir de unos minutos a varios años-).<p>
+<p>c) Según la finalidad para la que traten la información que recopilan, pueden ser:
+– Cookies técnicas (necesarias para el uso de la web y la prestación del servicio contratado),<p>
+<p>– Cookies de personalización (que permiten al usuario acceder al servicio con características predefinidas, como por ejemplo el idioma, tipo de navegador, configuración regional, etc.)<p>
+<p>– Cookies de análisis (recogen información el uso que se realiza de la web),<p>
+<p>– Cookies publicitarias (recogen información sobre las preferencias y elecciones personales de los usuarios),<p>
+<p>– Cookies de afiliados (permiten realizar un seguimiento de las visitas procedentes de otras webs, con las que el sitio web establece un contrato de afiliación).<p>
+<p>TIPOS DE COOKIES UTILIZADAS POR ESTE SITIO WEB<p>
+<p>Mientras navega por nuestra web, pueden almacenarse en su navegador las cookies de nuestras redes sociales. A continuación, le indicamos los enlaces sobre las cookies de las redes sociales que utilizamos en esta web:<p>
+<p>Cookies de Facebook, ver más información en su política de cookies<p>
+<p>Cookies de Instagram, ver más información en su política de cookies<p>
+<p>Cookies de Youtube, ver más información en su política de cookies<p>
+<p>Cookies de Linkedin, ver más información en su política de cookies<p>
+<p>REVOCACIÓN<p>
+<p>En todo momento podrá acceder a la configuración de su navegador aceptando o rechazando todas las cookies, o bien seleccionar aquéllas cuya instalación admite y cuáles no.<p>
+<p>DESACTIVACIÓN/ACTIVACIÓN Y
+ ELIMINACIÓN DE COOKIES<p>
+<p>Para restringir o bloquear las cookies, se hace a través de la configuración del navegador.
+Si no desea que los sitios web pongan ninguna cookie en su equipo, puede adaptar la configuración del navegador de modo que se le notifique antes de que se coloque ninguna cookie. De igual modo, puede adaptar la configuración de forma que el navegador rechace todas las cookies, o únicamente las cookies de terceros. También puede eliminar cualquiera de las cookies que ya se encuentren en el equipo. Tenga en cuenta que tendrá que adaptar por separado la configuración de cada navegador y equipo que utilice.
+Tenga en cuenta que si no desea recibir cookies, ya no podremos garantizar que nuestro sitio web funcione debidamente. Puede que algunas funciones del sitio se pierdan y es posible que ya no pueda ver ciertos sitios web. Además, rechazar las cookies no significa que ya no vaya a ver anuncios publicitarios. Simplemente los anuncios no se ajustarán a sus intereses y se repetirán con más frecuencia.
+Cada navegador posee un método distinto para adaptar la configuración. Si fuera necesario, consulte la función de ayuda del navegador para establecer la configuración correcta.
+Teniendo en cuenta la forma en la que funciona Internet y los sitios web, no siempre contamos con información de las cookies que colocan terceras partes a través de nuestro sitio web. Esto se aplica especialmente a casos en los que nuestra página web contiene lo que se denominan elementos integrados: textos, documentos, imágenes o breves películas que se almacenan en otra parte, pero se muestran en nuestro sitio web o a través del mismo.
+Por consiguiente, en caso de que se encuentre con este tipo de cookies en este sitio web y no estén enumeradas en la lista anterior, le rogamos que nos lo comunique. O bien póngase en contacto directamente con el tercero para pedirle información sobre las cookies que coloca, la finalidad y la duración de la cookie, y cómo ha garantizado su privacidad.<p>
+<p>INFORMACIÓN RELACIONADA CON EL TRATAMIENTO DE DATOS PERSONALES (ART.13 RGPD)<p>
+<p>¿Quién es el responsable del tratamiento de sus datos personales?<p>
+<p>DESPACHO ESPARTACO es el responsable del tratamiento de los datos personales que usted nos proporciona mediantela figura del titular del despacho don Luís Ramiro Pardo con número de colegiado 136629 del Ilustre Colegio de Abogados de Madrid
+¿Para qué utilizamos sus datos personales?
+La información recopilada a través de las cookies propias (cookies de sesión y de entrada de usuario) se suelen utilizar para rastrear las acciones del usuario al rellenar los formularios en línea en varias páginas, o como cesta de la compra para hacer el seguimiento de los artículos que el usuario ha seleccionado al pulsar un botón, o para personalizar la interface del usuario al visitar la página web.
+En esta web únicamente se utilizan cookies que recogen los datos imprescindibles que permiten el buen funcionamiento de la web.
+¿Cuál es la base legal para el tratamiento de sus datos personales?
+La legitimación para el tratamiento de sus datos personales viene dada por su consentimiento, otorgado en el momento de ponerse en contacto con nosotrxs, para la utilización de cookies analíticas, comportamentales y publicitarias; para las cookies de sesión o personalización, la legitimación para el tratamiento viene dada por el interés legítimo del prestador (responsable del tratamiento).
+¿A quién comunicamos sus datos?
+No se cederán ni comunicarán datos a terceros, salvo por obligación legal o a los terceros indicados en el caso de uso de cookies gestionadas por éstos.
+¿Cuáles son sus derechos?
+Los derechos que amparan al usuario son los de acceso, rectificación, supresión, portabilidad de los mismos, retirada del consentimiento (sin que ello afecte a la licitud del tratamiento otorgado previamente a su retirada), oposición al tratamiento, limitación (en determinadas circunstancias) y a presentar una reclamación ante la autoridad de control (la Agencia Española de protección de datos, www.aepd.es).
+.</p>">Política de cookies</button>
+  <button data-title="Política de protección de datos" data-text="<p>INTRODUCCIÓN:<p>
+
+<p>Mediante este documento les explicamos que datos recopilamos de los usuarios, para qué los utilizamos y cómo, entre otras indicaciones. Nunca solicitaremos más información de la que realmente necesitaremos para los servicios requeridos; nunca la compartiremos con terceros, excepto por obligación legal o con su autorización previa; y nunca utilizaremos sus datos para otra finalidad no indicada previamente.<p>
+
+<p>Como usuario, deberá leer atentamente esta política de privacidad de manera regular, y siempre que introduzca sus datos personales, ya que este documento puede sufrir modificaciones pues el prestador puede modificar cualquier tipo de información que pudiera aparecer en la web para cumplir con la normativa o actualizar la política, y sin que exista la obligación de pre-avisar o poner en conocimiento de los usuarios estas obligaciones, siendo suficientes la publicación en el sitio web del prestador.<p>
+
+<p>RESPONSABLE DEL TRATAMIENTO<p>
+
+<p>Identidad: DESPACHO ESPARTACO en la figura de Don Luís Ramiro Pardo(también el prestador)<p>
+
+<p>Número de Colegiado: 136629 del Ilustre Colegio de Abogados de Madrid<p>
+
+
+
+<p>Correo electrónico: <p>
+
+<p>Luís Ramiro Pardo, como responsable del Sitio web, de conformidad con lo que dispone el Reglamento (UE) 2016/679 de 27 de abril de 2016 (RGPD), Ley Orgánica 3/2018 de 5 de diciembre (LOPDGDD) y demás normativa legal vigente en materia de protección de datos personales, y por la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSICE), le informa de que tiene implementadas las medidas de seguridad necesarias, de índole técnica y organizativas, para garantizar y proteger la confidencialidad, integridad y disponibilidad de los datos introducidos.<p>
+
+<p>MÉTODO DE OBTENCIÓN DE LOS DATOS y DATOS QUE RECAUDAMOS:<p>
+
+<p>Los datos que recogemos y obtenemos son mediante el formulario de contacto: nombre, email, edad, teléfono
+
+No se tratan categorías de datos especialmente protegidos.<p>
+
+<p>FINALIDAD DEL TRATAMIENTO<p>
+
+<p>Sus datos personales sólo se utilizarán para las siguientes finalidades, prestando su consentimiento para cada una de las finalidades en el apartado correspondiente de la web:
+
+formulario de contacto: para responder a les consultas y / o proporcionar informaciones requeridas para el Usuario;
+Otras finalidades:
+Realizar las gestiones comerciales, administrativas, fiscales, contables que sean necesarias en virtud de la legislación vigente;
+Conocer su opinión y mejorar los servicios prestados por la web;
+Realización de análisis de usabilidad de la web, a través de las cookies (mencionadas en la política de cookies);
+Redes sociales: en el apartado correspondiente se especifica el uso de las redes sociales.
+Uso de Fotografías: Las fotografías que estén colgadas en la web son propiedad de Luís Ramiro Pardo o son de licencia Creative Commons.<p>
+
+<p>LEGITIMACIÓN DEL TRATAMIENTO<p>
+
+<p>La base legal para el tratamiento de los datos es su consentimiento otorgado en el momento de dar sus datos en el formulario correspondiente para llevar a cabo las finalidades, en el momento de marcado de la casilla de verificación.
+
+La oferta prospectiva o comercial de productos y servicios está basada en el consentimiento que se le solicita, sin que en ningún caso la retirada de este consentimiento condicione la ejecución del contrato de suscripción.
+
+No facilitar los datos personales solicitados o no aceptar la presente política de privacidad supone la imposibilidad de conseguir las finalidades anteriormente descritas.
+
+En los casos en que haya una previa relación contractual entre las partes, la legitimación para el desarrollo de las obligaciones administrativas, fiscales y contables que sean necesarias en virtud de la legislación vigente será la existencia previa de la relación comercial establecida entre las partes.<p>
+
+<p>PLAZO DE CONSERVACIÓN DE LOS DATOS:<p>
+
+<p>Sus datos se conservarán mientras dure la relación comercial con nosotrxs o ejerce su derecho de cancelación, oposición o revocación del consentimiento. Aun habiendo ejercido sus derechos de forma correcta, deberemos conservar debidamente bloqueados sus datos mientras duren los plazos legalmente previstos en las disposiciones aplicables.<p>
+
+<p>DESTINATARIOS DE CESIONES O TRANSFERENCIAS:<p>
+
+<p>Luís Ramiro Pardo no lleva a cabo ninguna cesión o comunicación de datos ni dentro ni fuera de la UE. El prestador únicamente facilitará información a las fuerzas y cuerpos de seguridad bajo orden judicial o por obligación de una norma legal, sin perjuicio de poder bloquear o cancelar su cuenta si puede haber indicios de la comisión de algún delito por parte del usuario. La información facilitada será sólo la que disponga en ese momento el prestador.<p>
+
+<p>DERECHOS DE LAS PERSONAS INTERESADAS:<p>
+
+<p>Como usuario-interesado, puede solicitar el ejercicio de los siguientes derechos ante Luís Ramiro Pardo enviando un correo electrónico a , indicando como Asunto: «PROTECCIÓN DE DATOS: DERECHOS DE LOS INTERESADOS «, y adjuntando fotocopia de su DNI o cualquier medio análogo en derecho, tal como indica la ley.<p>
+
+<p>Derechos:<p>
+
+<p>Derecho de acceso: permite al interesado conocer y obtener información sobre sus datos de carácter personal sometidos a tratamiento.<p>
+<p>Derecho de rectificación o supresión: permite corregir errores y modificar los datos que resulten ser inexactos o incompletos<p>
+<p>Derecho de cancelación: permite que se supriman los datos que sean inadecuados o excesivos<p>
+<p>Derecho de oposición: derecho del interesado a que no se lleve a cabo el tratamiento de sus datos de carácter personal o se cese en el mismo.<p>
+<p>Limitación del tratamiento:
+ conlleva el marcado de los datos personales conservados, con el fin de limitar su futuro tratamiento, para el ejercicio o la defensa de reclamaciones.<p>
+<p>Portabilidad de los datos: facilitación de los datos objeto de tratamiento al interesado, para que éste pueda transmitir a otro responsable, sin impedimentos.<p>
+<p>Derecho a no ser objeto de decisiones individuales automatizadas (incluida la elaboración de perfiles): derecho a no ser objeto de una decisión basada en el tratamiento automatizado que produzca efectos o afecte significativamente<p>
+<p>Como usuario, tiene derecho a retirar el consentimiento dado en cualquier momento. La retirada del consentimiento no afectará a la licitud del tratamiento efectuado antes de la retirada del consentimiento.<p>
+
+<p>También tiene derecho a presentar una reclamación ante la autoridad de control si considera que pueden haberse visto vulnerados sus derechos en relación a la protección de sus datos (www.aepd.es).<p>
+
+<p>MEDIDAS DE SEGURIDAD:<p>
+
+<p>Los datos que nos facilite se tratarán de forma confidencial. El prestador ha adoptado todas las medidas técnicas y organizativas y todos los niveles de protección necesarios para garantizar la seguridad en el tratamiento de los datos y evitar su alteración, pérdida, robo, tratamiento o acceso no autorizado, de acuerdo con el estado de la tecnología y naturaleza de los datos almacenados. Asimismo, se garantiza también que el tratamiento y registro en ficheros, programas, sistemas o equipos, locales y centros cumplen con los requisitos y condiciones de integridad y seguridad establecidas en la normativa vigente.<p>
+
+<p>IDIOMA<p>
+
+<p>El idioma aplicable a esta política de privacidad es el castellano. Por tanto, en caso de que hubiera alguna contradicción en alguna de las versiones facilitadas en otros idiomas, prevalecerá la versión en castellano.<p>
+
+<p>REDES SOCIALES<p>
+
+<p>Le informamos que Luís Ramiro Pardo puede tener presencia en redes sociales. El tratamiento de los datos que se lleve a cabo de las personas que se hagan seguidoras en las redes sociales (y / o realicen cualquier vínculo o acción de conexión a través de las redes sociales) de las páginas oficiales de Luís Ramiro Pardo se regirá por este apartado, así como para aquellas condiciones de uso, políticas de privacidad y normativas de acceso que pertenezcan a la red social que proceda en cada caso y aceptadas previamente por el usuario.<p>
+
+<p>El prestador tratará sus datos con las finalidades de administrar correctamente su presencia en la red social, informando de actividades, productos o servicios del prestador, así como para cualquier otra finalidad que las normativas de las Redes Sociales permitan.<p>
+
+<p>Asimismo, Luís Ramiro Pardo se reserva la potestad de retirar, sin previo aviso del sitio web o de la red social corporativa aquellos contenidos que se consideran inadecuados.<p>
+
+<p>En todo caso, si Ud. remite información personal a través de la red social, Luís Ramiro Pardo quedará exento de responsabilidad en relación con las medidas de seguridad aplicables a la presente plataforma y el usuario, en caso de querer conocerlas, debe consultar las correspondientes condiciones particulares de la red en cuestión.<p>
+
+<p>CAMBIOS EN LA PRESENTE POLÍTICA DE PRIVACIDAD<p>
+
+<p>El prestador se reserva el derecho a modificar la presente política para adaptarla a novedades legislativas.<p>
+
+<p>REVOCABILIDAD<p>
+
+<p>El consentimiento prestado, tanto por el tratamiento como para la cesión de los datos de los interesados, es revocable en cualquier momento comunicándolo al prestador en los términos establecidos en esta Política para el ejercicio de los derechos. Esta revocación en ningún caso tendrá carácter retroactivo.<p>
+
+<p>LEGISLACIÓN<p>
+
+<p>Con carácter general las relaciones entre Luís Ramiro Pardo con los Usuarios de sus servicios telemáticos, presentes en esta web, están sometidos a la legislación y jurisdicción española a la que se someten expresamente las partes, siendo competentes para la resolución de todos los conflictos derivados o relacionados con su uso los Juzgados y Tribunales de Madrid.<p>
+
+<p>Con carácter general las relaciones entre el prestador con los Usuarios de sus servicios telemáticos, presentes en esta web, están sometidos a la legislación y jurisdicción española a la que se someten expresamente las partes, siendo competentes para la resolución de todos los conflictos derivados o relacionados con su uso los Juzgados y Tribunales de Madrid</p>">Política de protección de datos</button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1 class="reveal">Defiende tus derechos laborales</h1>
+  <p class="typing">No permanezcas en silencio.</p>
+  <button id="hero-btn" class="reveal" data-title="Más Información" data-text="<p> <b><br>¿Le gritan en el trabajo?  ¿Le han despedido?¿Su empresa le debe dinero? ¿Lo va a seguir permitiendo? Pues basta de culpabilizarse y empiece a defender sus derechos. No se calle. Contacte con nosotrxs, para ello será necesario reservar mediante cita previa. No espere más.<p> <b><br>
+
+<br><b><p>
+Te esperamos.
+<br><b><p>
+
+    ">Saber más</button>
+</section>
+
+<!-- Cards -->
+<section class="cards">
+  <div class="card reveal">
+    <h3>Transparencia</h3>
+    <p>Desde el inicio sabrás cuánto cuesta nuestro servicio: 500 euros con IVA incluido, además de un 15% de porcentaje en caso de éxito sobre lo ganado, también con IVA incluido, por cada asunto.</p>
+  </div>
+  <div class="card reveal">
+    <h3>Compromiso</h3>
+    <p>No vendemos sus derechos al primer postor que se nos presente, su dignidad no tiene precio...</p>
+  </div>
+  <div class="card reveal">
+    <h3>Accesibilidad</h3>
+    <p>Es necesario reservar cita previa si desea contactar con nosotrxs. Puede ser de forma online (45 minutos) gratis o presencial según disponibilidad de agenda, con un precio de 30 euros, IVA incluido.<p>
+
+</div>
+</section>
+
+<!-- Botón flotante principal más grande -->
+<button class="cta-floating" data-title="Contacto" data-text="Le atenderemos una vez que solicite cita previa al teléfono: 123-456-789<br>También puede reservar cita previa en el email: info@despachoespartaco.com">📞 Contáctanos</button>
+
+<!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/34600017133" target="_blank" class="whatsapp-floating" aria-label="WhatsApp">
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" />
+</a>
+ 
+
+<!-- Modal -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content">
+    <button class="close-btn" aria-label="Cerrar">&times;</button>
+    <h2 id="modal-title"></h2>
+    <div id="modal-text"></div>
+  </div>
+</div>
+
+<!-- Banner cookies -->
+<div id="cookie-banner">
+  <p>Este sitio web utiliza cookies para mejorar tu experiencia.</p>
+  <div>
+    <button id="accept-btn">Aceptar</button>
+    <button id="reject-btn">Rechazar</button>
+    <button id="cookies-info-btn" data-title="Política de Cookies y Protección de Datos" data-text="<p>INTRODUCCIÓN Cookies<p>
+<p>La web de DESPACHO ESPARTACO utiliza cookies propias y de terceros. Las cookies se asocian únicamente a un usuario anónimo y su ordenador o dispositivo y no proporcionan referencias que permitan conocer sus datos personales, salvo permiso expreso de aquél.
+El usuario puede, en todo momento, aceptar o rechazar las cookies instaladas que no sean estrictamente necesarias para el correcto funcionamiento de la web y el acceso al Usuario a sus servicios, a través del panel de ajuste de cookies proporcionado en nuestra web. Asimismo, podrá configurar su navegador en todo momento sin que ello perjudique la posibilidad del Usuario de acceder a los contenidos. Sin embargo, le informamos de que el rechazo de las cookies puede disminuir el buen funcionamiento de la web.<p>
+<p>COOKIES AFECTADAS POR LA NORMATIVA Y COOKIES EXENTAS<p>
+<p>Según la directiva de la UE, las cookies que requieren el consentimiento informado por parte del usuario son las cookies de analítica, las de publicidad y afiliación, quedando exceptuadas las de carácter técnico y las necesarias para el funcionamiento del sitio web o la prestación de servicios expresamente demandados por el usuario.<p>
+<p>TIPOS DE COOKIES<p>
+<p>a) Según la entidad que las gestione, hay Cookies propias y de terceros.<p>
+<p>b) Según el tiempo que permanecen activas, existen las de sesión (diseñadas para recabar y almacenar datos mientras el usuario accede a una página web) y las persistentes (en las que los datos se almacenan en el terminal y pueden ser tratados durante un periodo definido por el responsable de la cookie -puede ir de unos minutos a varios años-).<p>
+<p>c) Según la finalidad para la que traten la información que recopilan, pueden ser:
+– Cookies técnicas (necesarias para el uso de la web y la prestación del servicio contratado),<p>
+<p>– Cookies de personalización (que permiten al usuario acceder al servicio con características predefinidas, como por ejemplo el idioma, tipo de navegador, configuración regional, etc.)<p>
+<p>– Cookies de análisis (recogen información el uso que se realiza de la web),<p>
+<p>– Cookies publicitarias (recogen información sobre las preferencias y elecciones personales de los usuarios),<p>
+<p>– Cookies de afiliados (permiten realizar un seguimiento de las visitas procedentes de otras webs, con las que el sitio web establece un contrato de afiliación).<p>
+<p>TIPOS DE COOKIES UTILIZADAS POR ESTE SITIO WEB<p>
+<p>Mientras navega por nuestra web, pueden almacenarse en su navegador las cookies de nuestras redes sociales. A continuación, le indicamos los enlaces sobre las cookies de las redes sociales que utilizamos en esta web:<p>
+<p>Cookies de Facebook, ver más información en su política de cookies<p>
+<p>Cookies de Instagram, ver más información en su política de cookies<p>
+<p>Cookies de Youtube, ver más información en su política de cookies<p>
+<p>Cookies de Linkedin, ver más información en su política de cookies<p>
+<p>REVOCACIÓN<p>
+<p>En todo momento podrá acceder a la configuración de su navegador aceptando o rechazando todas las cookies, o bien seleccionar aquéllas cuya instalación admite y cuáles no.<p>
+<p>DESACTIVACIÓN/ACTIVACIÓN Y ELIMINACIÓN DE COOKIES<p>
+<p>Para restringir o bloquear las cookies, se hace a través de la configuración del navegador.
+Si no desea que los sitios web pongan ninguna cookie en su equipo, puede adaptar la configuración del navegador de modo que se le notifique antes de que se coloque ninguna cookie. De igual modo, puede adaptar la configuración de forma que el navegador rechace todas las cookies, o únicamente las cookies de terceros. También puede eliminar cualquiera de
+ las cookies que ya se encuentren en el equipo. Tenga en cuenta que tendrá que adaptar por separado la configuración de cada navegador y equipo que utilice.
+Tenga en cuenta que si no desea recibir cookies, ya no podremos garantizar que nuestro sitio web funcione debidamente. Puede que algunas funciones del sitio se pierdan y es posible que ya no pueda ver ciertos sitios web. Además, rechazar las cookies no significa que ya no vaya a ver anuncios publicitarios. Simplemente los anuncios no se ajustarán a sus intereses y se repetirán con más frecuencia.
+Cada navegador posee un método distinto para adaptar la configuración. Si fuera necesario, consulte la función de ayuda del navegador para establecer la configuración correcta.
+Teniendo en cuenta la forma en la que funciona Internet y los sitios web, no siempre contamos con información de las cookies que colocan terceras partes a través de nuestro sitio web. Esto se aplica especialmente a casos en los que nuestra página web contiene lo que se denominan elementos integrados: textos, documentos, imágenes o breves películas que se almacenan en otra parte, pero se muestran en nuestro sitio web o a través del mismo.
+Por consiguiente, en caso de que se encuentre con este tipo de cookies en este sitio web y no estén enumeradas en la lista anterior, le rogamos que nos lo comunique. O bien póngase en contacto directamente con el tercero para pedirle información sobre las cookies que coloca, la finalidad y la duración de la cookie, y cómo ha garantizado su privacidad.<p>
+<p>INFORMACIÓN RELACIONADA CON EL TRATAMIENTO DE DATOS PERSONALES (ART.13 RGPD)<p>
+<p>¿Quién es el responsable del tratamiento de sus datos personales?<p>
+<p>DESPACHO ESPARTACO es el responsable del tratamiento de los datos personales que usted nos proporciona mediantela figura del titular del despacho don Luís Ramiro Pardo con número de colegiado 136629 del Ilustre Colegio de Abogados de Madrid
+¿Para qué utilizamos sus datos personales?
+La información recopilada a través de las cookies propias (cookies de sesión y de entrada de usuario) se suelen utilizar para rastrear las acciones del usuario al rellenar los formularios en línea en varias páginas, o como cesta de la compra para hacer el seguimiento de los artículos que el usuario ha seleccionado al pulsar un botón, o para personalizar la interface del usuario al visitar la página web.
+En esta web únicamente se utilizan cookies que recogen los datos imprescindibles que permiten el buen funcionamiento de la web.
+¿Cuál es la base legal para el tratamiento de sus datos personales?
+La legitimación para el tratamiento de sus datos personales viene dada por su consentimiento, otorgado en el momento de ponerse en contacto con nosotrxs, para la utilización de cookies analíticas, comportamentales y publicitarias; para las cookies de sesión o personalización, la legitimación para el tratamiento viene dada por el interés legítimo del prestador (responsable del tratamiento).
+¿A quién comunicamos sus datos?
+No se cederán ni comunicarán datos a terceros, salvo por obligación legal o a los terceros indicados en el caso de uso de cookies gestionadas por éstos.
+¿Cuáles son sus derechos?
+Los derechos que amparan al usuario son los de acceso, rectificación, supresión, portabilidad de los mismos, retirada del consentimiento (sin que ello afecte a la licitud del tratamiento otorgado previamente a su retirada), oposición al tratamiento, limitación (en determinadas circunstancias) y a presentar una reclamación ante la autoridad de control (la Agencia Española de protección de datos, www.aepd.es).
+.</p>
+       
+      <p>INTRODUCCIÓN Política de protección de datos</p>
+      <p>Mediante este documento les explicamos que datos recopilamos de los usuarios, para qué los utilizamos y cómo, entre otras indicaciones. Nunca solicitaremos más información de la que realmente necesitaremos para los servicios requeridos; nunca la compartiremos con terceros, excepto por obligación legal o con su autorización previa; y nunca utilizaremos sus datos para otra finalidad no indicada previamente.</p>
+      <p>Como usuario, deberá leer atentamente esta política de privacidad de manera regular, y siempre que introduzca sus datos personales, ya que este documento puede sufrir modificaciones pues el prestador puede modificar cualquier tipo de información que pudiera aparecer en la web para cumplir con la normativa o actualizar la política, y sin que exista la obligación de pre-avisar o poner en conocimiento de los usuarios estas obligaciones, siendo suficientes la publicación en el sitio web del prestador.</p>
+      <p><strong>RESPONSABLE DEL TRATAMIENTO</strong></p>
+      <p>Identidad: DESPACHO ESPARTACO en la figura de Don Luís Ramiro Pardo (también el prestador)</p>
+      <p>Número de Colegiado: 136629 del Ilustre Colegio de Abogados de Madrid</p>
+      <p>Correo electrónico: </p>
+     <p>Luís Ramiro Pardo, como responsable del Sitio web, de conformidad con lo que dispone el Reglamento (UE) 2016/679 de 27 de abril de 2016 (RGPD), Ley Orgánica 3/2018 de 5 de diciembre (LOPDGDD) y demás normativa legal vigente en materia de protección de datos personales, y por la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSICE), le informa de que tiene implementadas las medidas de seguridad necesarias, de índole técnica y organizativas, para garantizar y proteger la confidencialidad, integridad y disponibilidad de los datos introducidos.<p>
+
+<p>MÉTODO DE OBTENCIÓN DE LOS DATOS y DATOS QUE RECAUDAMOS:<p>
+
+<p>Los datos que recogemos y obtenemos son mediante el formulario de contacto: nombre, email, edad, teléfono
+
+No se tratan categorías de datos especialmente protegidos.<p>
+
+<p>FINALIDAD DEL TRATAMIENTO<p>
+
+<p>Sus datos personales sólo se utilizarán para las siguientes finalidades, prestando su consentimiento para cada una de las finalidades en el apartado correspondiente de la web:
+
+formulario de contacto: para responder a les consultas y / o proporcionar informaciones requeridas para el Usuario;
+Otras finalidades:
+Realizar las gestiones comerciales, administrativas, fiscales, contables que sean necesarias en virtud de la legislación vigente;
+Conocer su opinión y mejorar los servicios prestados por la web;
+Realización de análisis de usabilidad de la web, a través de las cookies (mencionadas en la política de cookies);
+Redes sociales: en el apartado correspondiente se especifica el uso de las redes sociales.
+Uso de Fotografías: Las fotografías que estén colgadas en la web son propiedad de Luís Ramiro Pardo o son de licencia Creative Commons.<p>
+
+<p>LEGITIMACIÓN DEL TRATAMIENTO<p>
+
+<p>La base legal para el tratamiento de los datos es su consentimiento otorgado en el momento de dar sus datos en el formulario correspondiente para llevar a cabo las finalidades, en el momento de marcado de la casilla de verificación.
+
+La oferta prospectiva o comercial de productos y servicios está basada en el consentimiento que se le solicita, sin que en ningún caso la retirada de este consentimiento condicione la ejecución del contrato de suscripción.
+
+No facilitar los datos personales solicitados o no aceptar la presente política de privacidad supone la imposibilidad de conseguir las finalidades anteriormente descritas.
+
+En los casos en que haya una previa relación contractual entre las partes, la legitimación para el desarrollo de las obligaciones administrativas, fiscales y contables que sean necesarias en virtud de la legislación vigente será la existencia previa de la relación comercial establecida entre las partes.<p>
+
+<p>PLAZO DE CONSERVACIÓN DE LOS DATOS:<p>
+
+<p>Sus datos se conservarán mientras dure la relación comercial con nosotrxs o ejerce su derecho de cancelación, oposición o revocación del consentimiento. Aun habiendo ejercido sus derechos de forma correcta, deberemos conservar debidamente bloqueados sus datos mientras duren los plazos legalmente previstos en las disposiciones aplicables.<p>
+
+<p>DESTINATARIOS DE CESIONES O TRANSFERENCIAS:<p>
+
+<p>Luís Ramiro Pardo no lleva a cabo ninguna cesión o comunicación de datos ni dentro ni fuera de la UE. El prestador únicamente facilitará información a las fuerzas y cuerpos de seguridad bajo orden judicial o por obligación de una norma legal, sin perjuicio de poder bloquear o cancelar su cuenta si puede haber indicios de la comisión de algún delito por parte del usuario. La información facilitada será sólo la que disponga en ese momento el prestador.<p>
+
+<p>DERECHOS DE LAS PERSONAS INTERESADAS:<p>
+
+<p>Como usuario-interesado, puede solicitar el ejercicio de los siguientes derechos ante Luís Ramiro Pardo enviando un correo electrónico a , indicando como Asunto: «PROTECCIÓN DE DATOS: DERECHOS DE LOS INTERESADOS «, y adjuntando fotocopia de su DNI o cualquier medio análogo en derecho, tal como indica la ley.<p>
+
+<p>Derechos:<p>
+
+<p>Derecho de acceso: permite al interesado conocer y obtener información sobre sus datos de carácter personal sometidos a tratamiento.<p>
+<p>Derecho de rectificación o supresión: permite corregir errores y modificar los datos que resulten ser inexactos o incompletos<p>
+<p>Derecho de cancelación: permite que se supriman los datos que sean inadecuados o excesivos<p>
+<p>Derecho de oposición: derecho del interesado a que no se lleve a cabo el tratamiento de sus datos de carácter personal o se cese en el mismo.<p>
+<p>Limitación del tratamiento: conlleva el marcado de los datos personales conservados, con el fin de limitar su futuro tratamiento, para el ejercicio o la defensa de reclamaciones.<p>
+<p>Portabilidad de los datos: facilitación de los datos objeto de tratamiento al interesado, para que éste pueda transmitir a otro responsable, sin impedimentos.<p>
+<p>Derecho a no ser objeto de decisiones individuales automatizadas (incluida la elaboración de perfiles): derecho a no ser objeto de una decisión basada
+ en el tratamiento automatizado que produzca efectos o afecte significativamente<p>
+<p>Como usuario, tiene derecho a retirar el consentimiento dado en cualquier momento. La retirada del consentimiento no afectará a la licitud del tratamiento efectuado antes de la retirada del consentimiento.<p>
+
+<p>También tiene derecho a presentar una reclamación ante la autoridad de control si considera que pueden haberse visto vulnerados sus derechos en relación a la protección de sus datos (www.aepd.es).<p>
+
+<p>MEDIDAS DE SEGURIDAD:<p>
+
+<p>Los datos que nos facilite se tratarán de forma confidencial. El prestador ha adoptado todas las medidas técnicas y organizativas y todos los niveles de protección necesarios para garantizar la seguridad en el tratamiento de los datos y evitar su alteración, pérdida, robo, tratamiento o acceso no autorizado, de acuerdo con el estado de la tecnología y naturaleza de los datos almacenados. Asimismo, se garantiza también que el tratamiento y registro en ficheros, programas, sistemas o equipos, locales y centros cumplen con los requisitos y condiciones de integridad y seguridad establecidas en la normativa vigente.<p>
+
+<p>IDIOMA<p>
+
+<p>El idioma aplicable a esta política de privacidad es el castellano. Por tanto, en caso de que hubiera alguna contradicción en alguna de las versiones facilitadas en otros idiomas, prevalecerá la versión en castellano.<p>
+
+<p>REDES SOCIALES<p>
+
+<p>Le informamos que Luís Ramiro Pardo puede tener presencia en redes sociales. El tratamiento de los datos que se lleve a cabo de las personas que se hagan seguidoras en las redes sociales (y / o realicen cualquier vínculo o acción de conexión a través de las redes sociales) de las páginas oficiales de Luís Ramiro Pardo se regirá por este apartado, así como para aquellas condiciones de uso, políticas de privacidad y normativas de acceso que pertenezcan a la red social que proceda en cada caso y aceptadas previamente por el usuario.<p>
+
+<p>El prestador tratará sus datos con las finalidades de administrar correctamente su presencia en la red social, informando de actividades, productos o servicios del prestador, así como para cualquier otra finalidad que las normativas de las Redes Sociales permitan.<p>
+
+<p>Asimismo, Luís Ramiro Pardo se reserva la potestad de retirar, sin previo aviso del sitio web o de la red social corporativa aquellos contenidos que se consideran inadecuados.<p>
+
+<p>En todo caso, si Ud. remite información personal a través de la red social, Luís Ramiro Pardo quedará exento de responsabilidad en relación con las medidas de seguridad aplicables a la presente plataforma y el usuario, en caso de querer conocerlas, debe consultar las correspondientes condiciones particulares de la red en cuestión.<p>
+
+<p>CAMBIOS EN LA PRESENTE POLÍTICA DE PRIVACIDAD<p>
+
+<p>El prestador se reserva el derecho a modificar la presente política para adaptarla a novedades legislativas.<p>
+
+<p>REVOCABILIDAD<p>
+
+<p>El consentimiento prestado, tanto por el tratamiento como para la cesión de los datos de los interesados, es revocable en cualquier momento comunicándolo al prestador en los términos establecidos en esta Política para el ejercicio de los derechos. Esta revocación en ningún caso tendrá carácter retroactivo.<p>
+
+<p>LEGISLACIÓN<p>
+
+<p>Con carácter general las relaciones entre Luís Ramiro Pardo con los Usuarios de sus servicios telemáticos, presentes en esta web, están sometidos a la legislación y jurisdicción española a la que se someten expresamente las partes, siendo competentes para la resolución de todos los conflictos derivados o relacionados con su uso los Juzgados y Tribunales de Madrid.<p>
+
+<p>Con carácter general las relaciones entre el prestador con los Usuarios de sus servicios telemáticos, presentes en esta web, están sometidos a la legislación y jurisdicción española a la que se someten expresamente las partes, siendo competentes para la resolución de todos los conflictos derivados o relacionados con su uso los Juzgados y Tribunales de Madrid</p>
+">Política de cookies y Protección de datos</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  © 2025 Despacho Espartaco ·
+</footer>
+
+<script>
+  // Splash Screen
+  const splash = document.getElementById('splash-screen');
+  const enterBtn = document.getElementById('enter-btn');
+  setTimeout(() => splash.classList.add('hidden'), 4000);
+  enterBtn.addEventListener('click', () => splash.classList.add('hidden'));
+
+  // Menú lateral
+  const menu = document.getElementById('menu');
+  document.querySelector('.menu-toggle').addEventListener('click', () => menu.classList.toggle('active'));
+ 
+  // Modal
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalText = document.getElementById('modal-text');
+  const closeModalBtn = document.querySelector('.close-btn');
+
+  const openButtons = document.querySelectorAll('nav button, #hero-btn, .cta-floating, #cookies-info-btn');
+  openButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modalTitle.textContent = btn.dataset.title || "Despacho Espartaco";
+      modalText.innerHTML = btn.dataset.text || "";
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  const closeModal = () => {
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  };
+  closeModalBtn.addEventListener('click', closeModal);
+  window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  window.addEventListener('keydown', e => { if (e.key === "Escape") closeModal(); });
+
+  // Cookies
+  const cookieBanner = document.getElementById('cookie-banner');
+  document.getElementById('accept-btn').addEventListener('click', () => cookieBanner.style.display = 'none');
+  document.getElementById('reject-btn').addEventListener('click', () => cookieBanner.style.display = 'none');
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const revealOnScroll = () => {
+    const windowHeight = window.innerHeight;
+    reveals.forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if(top < windowHeight - 100) el.classList.add('active');
+    });
+  };
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+</script>
+</body>
+</html>
